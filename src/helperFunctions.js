@@ -28,7 +28,11 @@ const calcTotalExpenses = (allTransactions) => {
   return allTransactions.reduce((acc, transaction) => acc + transaction.amount, 0)
 }
 
-module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses }
+const deleteIcon = (icons, type) => {
+  return icons.filter(icon => icon !== type);
+}
+
+module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses, deleteIcon }
 
 
 

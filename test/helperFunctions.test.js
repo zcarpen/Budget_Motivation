@@ -1,4 +1,4 @@
-const { addTransaction, removeTransaction, updateTransaction, createExpensesObj, calcTotalExpenses } = require('../src/helperFunctions.js');
+const { addTransaction, removeTransaction, updateTransaction, createExpensesObj, calcTotalExpenses, deleteIcon } = require('../src/helperFunctions.js');
 
 const data =
 {
@@ -133,9 +133,20 @@ describe("calcTotalExpenses", () => {
 })
 
 
-// describe("deleteIcon", () => {
-//   it("should delete an icon from icons")
-// })
+describe("deleteIcon", () => {
+  it("should delete an icon from icons", () => {
+    const iconsCopy = [...data.icons]
+    const iconRemoved = deleteIcon(iconsCopy, 'coffee');
+    const indexToDelete = data.icons.findIndex(icon => icon === 'coffee');
+    const newIconsArray = data.icons.slice(0, indexToDelete).concat(data.icons.slice(indexToDelete + 1))
+    expect(iconRemoved).toEqual(newIconsArray)
+  })
+  it("should have length that is one less than previous icons array", () => {
+    const iconsCopy = [...data.icons]
+    const iconRemoved = deleteIcon(iconsCopy, 'coffee');
+    expect(iconRemoved.length).toBe(data.icons.length - 1)
+  })
+})
 
 
 // describe("addIcon", () => {
