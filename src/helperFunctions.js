@@ -32,7 +32,15 @@ const deleteIcon = (icons, type) => {
   return icons.filter(icon => icon !== type);
 }
 
-module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses, deleteIcon }
+const addIcon = (icons, type) => {
+  if (icons.length < 12) {
+    icons.push(type);
+    return icons
+  }
+  return icons
+}
+
+module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon }
 
 
 

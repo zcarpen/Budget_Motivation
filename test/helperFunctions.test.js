@@ -1,4 +1,4 @@
-const { addTransaction, removeTransaction, updateTransaction, createExpensesObj, calcTotalExpenses, deleteIcon } = require('../src/helperFunctions.js');
+const { addTransaction, removeTransaction, updateTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon } = require('../src/helperFunctions.js');
 
 const data =
 {
@@ -46,20 +46,20 @@ const data =
 describe("addTransaction", () => {
 
   it("should return an updated version of allTransactions when expense is added", () => {
-    const newTransactions = addTransaction({ id: 13, type: 'selfCare', amount: 50, time: 'someTime' }, data.allTransactions)
+    const newTransactions = addTransaction({ id: 13, type: 'selfCare', amount: 50, time: 'someTime' }, data.allTransactions);
     const testTransactions = [...data.allTransactions];
-    testTransactions.push({ id: 13, type: 'selfCare', amount: 50, time: 'someTime' })
-    expect(newTransactions).toEqual(testTransactions)
+    testTransactions.push({ id: 13, type: 'selfCare', amount: 50, time: 'someTime' });
+    expect(newTransactions).toEqual(testTransactions);
   })
 
   it("should return allTransactions with length increased by 1", () => {
-    const newTransactions = addTransaction({ id: 13, type: 'selfCare', amount: 50, time: 'someTime' }, data.allTransactions)
-    expect(newTransactions.length).toBe(data.allTransactions.length + 1)
+    const newTransactions = addTransaction({ id: 13, type: 'selfCare', amount: 50, time: 'someTime' }, data.allTransactions);
+    expect(newTransactions.length).toBe(data.allTransactions.length + 1);
   })
 
   it("should contain the added object within newTransations", () => {
-    const newTransactions = addTransaction({ id: 13, type: 'selfCare', amount: 50, time: 'someTime' }, data.allTransactions)
-    expect(newTransactions.find(expense => expense.id === 13)).toBeTruthy()
+    const newTransactions = addTransaction({ id: 13, type: 'selfCare', amount: 50, time: 'someTime' }, data.allTransactions);
+    expect(newTransactions.find(expense => expense.id === 13)).toBeTruthy();
   })
 
 
@@ -69,36 +69,36 @@ describe("addTransaction", () => {
 describe("removeTransaction", () => {
 
   it("should return an updated version of allTransactions when expense is removed", () => {
-    const newTransactions = removeTransaction(data.allTransactions, 12)
-    expect([...newTransactions, { id: 12, type: 'selfCare', amount: 150, time: 'someTime' }]).toEqual(data.allTransactions)
+    const newTransactions = removeTransaction(data.allTransactions, 12);
+    expect([...newTransactions, { id: 12, type: 'selfCare', amount: 150, time: 'someTime' }]).toEqual(data.allTransactions);
   })
 
   it("should return allTransactions with length decreased by 1", () => {
-    const newTransactions = removeTransaction(data.allTransactions, 12)
-    expect(newTransactions.length).toBe(data.allTransactions.length - 1)
+    const newTransactions = removeTransaction(data.allTransactions, 12);
+    expect(newTransactions.length).toBe(data.allTransactions.length - 1);
   })
 
   it("should not contain the added object within newTransactions", () => {
-    const newTransactions = removeTransaction(data.allTransactions, 12)
-    expect(newTransactions.find(expense => expense.id === 12)).toBeFalsy()
+    const newTransactions = removeTransaction(data.allTransactions, 12);
+    expect(newTransactions.find(expense => expense.id === 12)).toBeFalsy();
   })
 })
 
 describe("updateTransaction", () => {
 
   it("should return an updated version of allTransactions that is diffferent than previous version", () => {
-    const newTransactions = updateTransaction({ id: 12, type: 'selfCare', amount: 50, time: 'someTime' }, data.allTransactions, 12)
-    expect(newTransactions).not.toEqual(data.allTransactions)
+    const newTransactions = updateTransaction({ id: 12, type: 'selfCare', amount: 50, time: 'someTime' }, data.allTransactions, 12);;
+    expect(newTransactions).not.toEqual(data.allTransactions);;
   })
 
   it("should return allTransactions with same length", () => {
-    const newTransactions = updateTransaction({ id: 12, type: 'selfCare', amount: 50, time: 'someTime' }, data.allTransactions, 12)
-    expect(newTransactions.length).toBe(data.allTransactions.length)
+    const newTransactions = updateTransaction({ id: 12, type: 'selfCare', amount: 50, time: 'someTime' }, data.allTransactions, 12);;
+    expect(newTransactions.length).toBe(data.allTransactions.length);;
   })
 
   it("should return an updated version of allTransactions where expense is updated properly", () => {
-    const newTransactions = updateTransaction({ id: 12, type: 'selfCare', amount: 50, time: 'someTime' }, data.allTransactions, 12)
-    expect({ id: 12, type: 'selfCare', amount: 50, time: 'someTime' }).toEqual(newTransactions.find(expense => expense.id === 12))
+    const newTransactions = updateTransaction({ id: 12, type: 'selfCare', amount: 50, time: 'someTime' }, data.allTransactions, 12);;
+    expect({ id: 12, type: 'selfCare', amount: 50, time: 'someTime' }).toEqual(newTransactions.find(expense => expense.id === 12));;
   })
 })
 
@@ -112,22 +112,22 @@ describe("createExpensesObj", () => {
   it("should create an object of expenses that totals to be the same as allTransactions", () => {
     const expensesObj = createExpensesObj(data.allTransactions);
     const totalExpenses = Object.entries(expensesObj).reduce((acc, [expense, cost]) => acc + cost, 0);
-    let total = 0
-    data.allTransactions.forEach(transaction => total = total + transaction.amount)
+    let total = 0;;
+    data.allTransactions.forEach(transaction => total = total + transaction.amount);;
     expect(totalExpenses).toBe(total);
   })
 })
 
 describe("calcTotalExpenses", () => {
   it("should calculate the total expenses for a given month", () => {
-    const totalExpenses = calcTotalExpenses(data.allTransactions)
-    let total = 0
-    data.allTransactions.forEach(transaction => total = total + transaction.amount)
+    const totalExpenses = calcTotalExpenses(data.allTransactions);
+    let total = 0;
+    data.allTransactions.forEach(transaction => total = total + transaction.amount);
     expect(totalExpenses).toBe(total);
   })
 
   it("should return 0 if the total expenses for a given month are empty", () => {
-    const totalExpenses = calcTotalExpenses([])
+    const totalExpenses = calcTotalExpenses([]);
     expect(totalExpenses).toBe(0);
   })
 })
@@ -135,24 +135,32 @@ describe("calcTotalExpenses", () => {
 
 describe("deleteIcon", () => {
   it("should delete an icon from icons", () => {
-    const iconsCopy = [...data.icons]
+    const iconsCopy = [...data.icons];
     const iconRemoved = deleteIcon(iconsCopy, 'coffee');
     const indexToDelete = data.icons.findIndex(icon => icon === 'coffee');
-    const newIconsArray = data.icons.slice(0, indexToDelete).concat(data.icons.slice(indexToDelete + 1))
-    expect(iconRemoved).toEqual(newIconsArray)
+    const newIconsArray = data.icons.slice(0, indexToDelete).concat(data.icons.slice(indexToDelete + 1));
+    expect(iconRemoved).toEqual(newIconsArray);
   })
+
   it("should have length that is one less than previous icons array", () => {
-    const iconsCopy = [...data.icons]
+    const iconsCopy = [...data.icons];
     const iconRemoved = deleteIcon(iconsCopy, 'coffee');
-    expect(iconRemoved.length).toBe(data.icons.length - 1)
+    expect(iconRemoved.length).toBe(data.icons.length - 1);
   })
 })
 
 
-// describe("addIcon", () => {
-//   it("should check if number of icons is less than 12")
-//   it("should add an icon from icons")
-// })
+describe("addIcon", () => {
+  it("should return prevState of icons if number of icons is not less than 12", () => {
+    expect(addIcon(data.icons, 'appleSauce')).toEqual(data.icons);
+  })
+
+  it("should add an icon from icons", () => {
+    const testIcons = data.icons.slice(0, data.icons.length - 1);
+    const testSolution = [...data.icons.slice(0, data.icons.length - 1), 'applesauce'];
+    expect(addIcon(testIcons, 'applesauce')).toEqual(testSolution);
+  })
+})
 
 // describe("calcPercentage", () => {
 //   it("should return the percentage of a whole to 3 decimal places")
