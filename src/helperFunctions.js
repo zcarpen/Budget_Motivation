@@ -17,18 +17,18 @@ const removeTransaction = (data, id) => {
   return data.filter(transaction => transaction.id !== id);
 }
 
-const createExpenses = (allTransactions) => {
+const createExpensesObj = (allTransactions) => {
   return allTransactions.reduce((acc, transaction) => {
     acc[transaction.type] = acc[transaction.type] === undefined ? transaction.amount : acc[transaction.type] + transaction.amount;
     return acc
   }, {});
 }
-// describe("createExpensesAndCalcTotal", () => {
-//   it("should create an object of expenses using the all transactions array on load")
-//   it("chould calculate the total expenses for a given month")
-// })
 
-module.exports = { addTransaction, updateTransaction, removeTransaction, createExpenses }
+const calcTotalExpenses = (allTransactions) => {
+  return allTransactions.reduce((acc, transaction) => acc + transaction.amount, 0)
+}
+
+module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses }
 
 
 

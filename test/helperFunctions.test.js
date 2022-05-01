@@ -1,4 +1,4 @@
-const { addTransaction, removeTransaction, updateTransaction, createExpenses } = require('../src/helperFunctions.js');
+const { addTransaction, removeTransaction, updateTransaction, createExpensesObj, calcTotalExpenses } = require('../src/helperFunctions.js');
 
 const data =
 {
@@ -103,14 +103,14 @@ describe("updateTransaction", () => {
 })
 
 
-describe("createExpenses", () => {
+describe("createExpensesObj", () => {
   it("should create an object of expenses using the allTransactions array on load", () => {
-    const expensesObj = createExpenses(data.allTransactions);
+    const expensesObj = createExpensesObj(data.allTransactions);
     expect(expensesObj).toEqual(data.expenses);
   })
 
   it("should create an object of expenses that totals to be the same as allTransactions", () => {
-    const expensesObj = createExpenses(data.allTransactions);
+    const expensesObj = createExpensesObj(data.allTransactions);
     const totalExpenses = Object.entries(expensesObj).reduce((acc, [expense, cost]) => acc + cost, 0);
     let total = 0
     data.allTransactions.forEach(transaction => total = total + transaction.amount)
@@ -118,9 +118,19 @@ describe("createExpenses", () => {
   })
 })
 
-// describe("calcTotal", () => {
-//   it("chould calculate the total expenses for a given month")
-// })
+describe("calcTotalExpenses", () => {
+  it("should calculate the total expenses for a given month", () => {
+    const totalExpenses = calcTotalExpenses(data.allTransactions)
+    let total = 0
+    data.allTransactions.forEach(transaction => total = total + transaction.amount)
+    expect(totalExpenses).toBe(total);
+  })
+
+  it("should return 0 if the total expenses for a given month are empty", () => {
+    const totalExpenses = calcTotalExpenses([])
+    expect(totalExpenses).toBe(0);
+  })
+})
 
 
 // describe("deleteIcon", () => {
