@@ -54,7 +54,12 @@ const toggleTransaction = (arrayOfToggledExpenseTypes, expenseType) => {
 }
 
 const calcToggledTransactions = (listOfTypesToToggle, allTransactions) => {
-
+  return allTransactions.reduce((acc, transaction) => {
+    if (!listOfTypesToToggle.includes(transaction.type)) {
+      return acc + transaction.amount;
+    }
+    return acc;
+  }, 0)
 }
 
 module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon, calcPercentage, toggleTransaction, calcToggledTransactions }

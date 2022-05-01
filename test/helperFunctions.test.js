@@ -203,13 +203,22 @@ describe("toggleTransaction", () => {
     const newToggleList2 = toggleTransaction([...data.toggleList, 'house'], 'coffee');
     expect(newToggleList2).toEqual(['house', 'coffee']);
     expect(data.toggleList.length + 2).toBe(newToggleList2.length);
-
   })
 })
 
-// describe("calcToggledTransactions", () => {
-//   it("should subtract an item from monthly transactions")
-// })
+describe("calcToggledTransactions", () => {
+  it("should calculate total expenses using toggled transactions", () => {
+    const copyOfToggledTransactions = ['coffee', 'grocery'];
+    const totalExcludingToggledExpenses = calcToggledTransactions(copyOfToggledTransactions, data.allTransactions)
+    expect(totalExcludingToggledExpenses).toBe(data.totalSpent - 400)
+  })
+
+  it("should calculate total expenses if toggled transactions are empty", () => {
+    const copyOfToggledTransactions = [];
+    const totalExcludingToggledExpenses = calcToggledTransactions(copyOfToggledTransactions, data.allTransactions)
+    expect(totalExcludingToggledExpenses).toBe(data.totalSpent)
+  })
+})
 
 
 
