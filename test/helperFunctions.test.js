@@ -1,4 +1,4 @@
-const { addTransaction, removeTransaction, updateTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon, calcPercentage } = require('../src/helperFunctions.js');
+const { addTransaction, removeTransaction, updateTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon, calcPercentage, toggleTransaction, calcToggledTransactions } = require('../src/helperFunctions.js');
 
 const data =
 {
@@ -37,6 +37,7 @@ const data =
     { id: 11, type: 'games', amount: 50, time: 'someTime' },
     { id: 12, type: 'selfCare', amount: 150, time: 'someTime' }
   ],
+  toggleList: [],
   InvestmentMotivator: false,
   expenseChart: false,
 }
@@ -179,9 +180,38 @@ describe("calcPercentage", () => {
   })
 })
 
-// describe("toggleTransaction", () => {
+describe("toggleTransaction", () => {
+  it("should subtract an item from toggleList if it exists", () => {
+    //one item to zero items
+    const newToggleList = toggleTransaction(['coffee'], 'coffee');
+    expect(newToggleList).toEqual([]);
+    expect(newToggleList.length).toBe(0);
+
+    // two items to one item
+    const newToggleList2 = toggleTransaction(['coffee', 'house'], 'coffee');
+    expect(newToggleList2).toEqual(['house']);
+    expect(newToggleList2.length).toBe(1);
+  })
+
+  it("should add an item to toggleList if it did not exist", () => {
+    // zero items to one item
+    const newToggleList = toggleTransaction([...data.toggleList], 'coffee');
+    expect(newToggleList).toEqual(['coffee']);
+    expect(data.toggleList.length + 1).toBe(newToggleList.length);
+
+    // one items to two item
+    const newToggleList2 = toggleTransaction([...data.toggleList, 'house'], 'coffee');
+    expect(newToggleList2).toEqual(['house', 'coffee']);
+    expect(data.toggleList.length + 2).toBe(newToggleList2.length);
+
+  })
+})
+
+// describe("calcToggledTransactions", () => {
 //   it("should subtract an item from monthly transactions")
 // })
+
+
 
 // describe("getCompound7", () => {
 //   it("should calculate the compound interest for a given amount for 7 iterations")

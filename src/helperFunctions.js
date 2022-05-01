@@ -44,7 +44,20 @@ const calcPercentage = (part, whole) => {
   return Number((part / whole).toFixed(2))
 }
 
-module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon, calcPercentage }
+const toggleTransaction = (arrayOfToggledExpenseTypes, expenseType) => {
+  const newArrayOfToggledExpenses = [...arrayOfToggledExpenseTypes]
+  if (arrayOfToggledExpenseTypes.findIndex(type => type === expenseType) === -1) {
+    newArrayOfToggledExpenses.push(expenseType)
+    return newArrayOfToggledExpenses;
+  }
+  return arrayOfToggledExpenseTypes.filter(expense => expense !== expenseType)
+}
+
+const calcToggledTransactions = (listOfTypesToToggle, allTransactions) => {
+
+}
+
+module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon, calcPercentage, toggleTransaction, calcToggledTransactions }
 
 
 
