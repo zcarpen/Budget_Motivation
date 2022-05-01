@@ -40,7 +40,11 @@ const addIcon = (icons, type) => {
   return icons
 }
 
-module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon }
+const calcPercentage = (part, whole) => {
+  return Number((part / whole).toFixed(2))
+}
+
+module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon, calcPercentage }
 
 
 

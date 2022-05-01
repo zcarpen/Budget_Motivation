@@ -1,4 +1,4 @@
-const { addTransaction, removeTransaction, updateTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon } = require('../src/helperFunctions.js');
+const { addTransaction, removeTransaction, updateTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon, calcPercentage } = require('../src/helperFunctions.js');
 
 const data =
 {
@@ -162,9 +162,22 @@ describe("addIcon", () => {
   })
 })
 
-// describe("calcPercentage", () => {
-//   it("should return the percentage of a whole to 3 decimal places")
-// })
+describe("calcPercentage", () => {
+  it("should return the percentage of a whole to 2 decimal places", () => {
+    const percentage = calcPercentage(data.expenses.grocery, data.totalSpent);
+    expect(percentage).toBe(0.27);
+  })
+
+  it("should return the percentage of a whole to 2 decimal places if the part is 100 percent of expenses", () => {
+    const percentage = calcPercentage(1120, data.totalSpent);
+    expect(percentage).toBe(1);
+  })
+
+  it("should return the percentage of a whole to 2 decimal places if the part is 0 percent of the expenses", () => {
+    const percentage = calcPercentage(0, data.totalSpent);
+    expect(percentage).toBe(0);
+  })
+})
 
 // describe("toggleTransaction", () => {
 //   it("should subtract an item from monthly transactions")
