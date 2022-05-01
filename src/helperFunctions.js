@@ -68,10 +68,13 @@ const getContinuousInterest = (initialInvestment, interestRate = .1, time = 1) =
 }
 
 const getContinuousInterest7 = (initialInvestment, time = 7) => {
-
-  Math.E
-
-
+  const investmentByYear = [];
+  investmentByYear.push(initialInvestment);
+  while (time > 0) {
+    investmentByYear.push(getContinuousInterest(investmentByYear[investmentByYear.length - 1]));
+    time--;
+  }
+  return investmentByYear;
 }
 
 

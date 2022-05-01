@@ -236,7 +236,14 @@ describe("getContinuousInterest", () => {
   })
 })
 
-// describe("getContinuousInterest7", () => {
-//   it("should calculate the compound interest for a given amount for 7 iterations")
-//   it("should return an array of length 7")
-// })
+describe("getContinuousInterest7", () => {
+
+  it("should calculate the compound interest for an initial amount over 7 years", () => {
+    const expectedGrowth7 = [2680.00, 2961.86, 3273.36, 3617.62, 3998.09, 4418.57, 4883.28, 5396.86];
+    expect(getContinuousInterest7(data.monthlyBudget - data.totalSpent)).toEqual(expectedGrowth7)
+  })
+
+  it("should return an array of length 8", () => {
+    expect(getContinuousInterest7(data.monthlyBudget - data.totalSpent).length).toBe(8)
+  })
+})
