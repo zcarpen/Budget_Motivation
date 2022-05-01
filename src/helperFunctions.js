@@ -62,29 +62,25 @@ const calcToggledTransactions = (listOfTypesToToggle, allTransactions) => {
   }, 0)
 }
 
-module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon, calcPercentage, toggleTransaction, calcToggledTransactions }
+const getContinuousInterest = (initialInvestment, interestRate = .1, time = 1) => {
+  if (initialInvestment <= 0) return 0;
+  return Number((initialInvestment * Math.pow(Math.E, (interestRate * time))).toFixed(2));
+}
+
+const getContinuousInterest7 = (initialInvestment, time = 7) => {
+
+  Math.E
 
 
+}
 
-// describe("deleteIcon", () => {
-//   it("should delete an icon from icons")
-// })
-
-
-// describe("addIcon", () => {
-//   it("should check if number of icons is less than 12")
-//   it("should add an icon from icons")
-// })
-
-// describe("calcPercentage", () => {
-//   it("should return the percentage of a whole to 3 decimal places")
-// })
-
-// describe("reCalcTotal", () => {
-//   it("should subtract an item from monthly transactions and recalculate total")
-// })
 
 // describe("getCompound7", () => {
 //   it("should calculate the compound interest for a given amount for 7 iterations")
 //   it("should return an array of length 7")
 // })
+module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon, calcPercentage, toggleTransaction, calcToggledTransactions, getContinuousInterest, getContinuousInterest7 }
+
+
+
+

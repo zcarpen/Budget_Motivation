@@ -1,4 +1,4 @@
-const { addTransaction, removeTransaction, updateTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon, calcPercentage, toggleTransaction, calcToggledTransactions } = require('../src/helperFunctions.js');
+const { addTransaction, removeTransaction, updateTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon, calcPercentage, toggleTransaction, calcToggledTransactions, getContinuousInterest, getContinuousInterest7 } = require('../src/helperFunctions.js');
 
 const data =
 {
@@ -222,7 +222,21 @@ describe("calcToggledTransactions", () => {
 
 
 
-// describe("getCompound7", () => {
+describe("getContinuousInterest", () => {
+  it("should calculate the compound interest for a given amount over 1 year", () => {
+    expect(getContinuousInterest(data.monthlyBudget - data.totalSpent)).toBe(2961.86)
+  })
+
+  it("should return 0 if initial amount is negative", () => {
+    expect(getContinuousInterest(-15)).toBe(0)
+  })
+
+  it("should return 0 if initial amount is 0", () => {
+    expect(getContinuousInterest(0)).toBe(0)
+  })
+})
+
+// describe("getContinuousInterest7", () => {
 //   it("should calculate the compound interest for a given amount for 7 iterations")
 //   it("should return an array of length 7")
 // })
