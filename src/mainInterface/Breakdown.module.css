@@ -1,0 +1,28 @@
+.breakdown-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.breakdown-point {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.budget {
+  color: blue;
+}
+
+.spent {
+  color: red;
+}
+
+.left {
+  color: green;
+}

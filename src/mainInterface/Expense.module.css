@@ -1,0 +1,23 @@
+.expense-container {
+  width: 4rem;
+  height: 4rem;
+  border: 0.2rem solid #000;
+  border-radius: 1rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.expense-type {
+  margin: 0;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: -1.2rem;
+  width: 100%;
+  text-align: center;
+}
+
+.icon {
+  font-size: 3rem;
+}

@@ -1,0 +1,12 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+}
+
+.signed-in-as {
+  font-size: 0.5rem;
+  padding-left: 2rem;
+}
