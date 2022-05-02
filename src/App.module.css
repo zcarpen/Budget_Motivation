@@ -1,6 +1,6 @@
 .app {
   width: 39rem;
-  /* height: 84.4rem; */
+  height: 84.4rem;
   display: flex;
   flex-direction: column;
   align-items: center;

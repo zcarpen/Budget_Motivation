@@ -18,7 +18,6 @@ const Expenses = () => {
     'self-care'
   ]
 
-
   return (
     <div className={ExpensesCSS['expenses-container']}>
       {icons.map((expenseType => <Expense expenseType={expenseType} />))}

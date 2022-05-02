@@ -38,9 +38,10 @@ const data =
     { id: 12, type: 'selfCare', amount: 150, time: 'someTime' }
   ],
   toggleList: [],
-  InvestmentMotivator: false,
-  expenseChart: false,
+  // InvestmentMotivator: false,
+  // expenseChart: false,
 }
+
 
 
 
