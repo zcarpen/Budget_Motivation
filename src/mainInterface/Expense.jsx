@@ -19,12 +19,14 @@ const Expense = ({ expenseType, handleExpenseModal, modal, canDelete, deleteExpe
     games: faGamepad,
     'self-care': faFaceSmile,
     other: faCircleQuestion,
-    favorite: faStar,
   }
 
   let styleName = modal ? 'expense-container-modal' : 'expense-container';
 
   const iconSelector = (type) => {
+    if (icons[type] === undefined) {
+      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faStar} />
+    }
     return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={icons[type]} />
   }
 

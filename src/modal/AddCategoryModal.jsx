@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 
-const AddCategoryModal = ({ closeModalHandler }) => {
+const AddCategoryModal = ({ closeModalHandler, addExpenseCategoryHandler }) => {
   const [expenseCategory, setExpenseCategory] = useState('')
 
   const changeCategory = (e) => {
@@ -14,7 +14,7 @@ const AddCategoryModal = ({ closeModalHandler }) => {
   }
 
   return (
-    <form className={AddCategoryModalCSS.container}>
+    <form onSubmit={() => addExpenseCategoryHandler(expenseCategory)} className={AddCategoryModalCSS.container}>
       <h2>Enter category that you'd like to add.</h2>
       <div className={AddCategoryModalCSS['category-container-modal']}>
         <FontAwesomeIcon

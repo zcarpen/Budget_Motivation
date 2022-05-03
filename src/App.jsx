@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { addTransaction, deleteIcon } from './helperFunctions.js';
+import { addTransaction, deleteIcon, addIcon } from './helperFunctions.js';
 import logo from './logo.svg'
 import AppCSS from './App.module.css'
 import MainInterface from './mainInterface/MainInterface'
@@ -70,7 +70,6 @@ function App() {
   }
 
   const deleteExpenseCategoryHandler = (expenseType) => {
-    debugger;
     if (!canDelete) {
       setCanDelete(true)
     } else {
@@ -80,7 +79,6 @@ function App() {
   }
 
   const addExpenseCategoryHandler = (expenseType) => {
-    debugger;
     if (!categoryModalIsVisible) {
       setCategoryModalIsVisible(true)
     } else {
