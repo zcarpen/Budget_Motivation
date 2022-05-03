@@ -8,7 +8,12 @@ const MainInterface = ({
   allTransactions,
   monthlyIncome,
   monthlyBudget,
+  canDelete,
+  handleExpenseModal,
+  deleteExpenseCategoryHandler,
+  addExpenseCategoryHandler
 }) => {
+
   return (
     <div className={MainInterfaceCSS['main-interface-container']}>
       <h3>Add An Expense</h3>
@@ -17,10 +22,15 @@ const MainInterface = ({
         monthlyBudget={monthlyBudget}
         monthlyIncome={monthlyIncome}
       />
-      <Expenses expenseCategories={expenseCategories} />
+      <Expenses
+        expenseCategories={expenseCategories}
+        handleExpenseModal={handleExpenseModal}
+        canDelete={canDelete}
+        deleteExpenseCategoryHandler={deleteExpenseCategoryHandler}
+      />
       <div className={MainInterfaceCSS['btn-container']}>
-        <button className={MainInterfaceCSS['btn__delete-icon']}>Delete Category</button>
-        <button className={MainInterfaceCSS['btn__add-icon']}>Add Category</button>
+        <button onClick={deleteExpenseCategoryHandler} className={MainInterfaceCSS['btn__delete-icon']}>Delete Category</button>
+        <button onClick={addExpenseCategoryHandler} className={MainInterfaceCSS['btn__add-icon']}>Add Category</button>
       </div>
     </div>
   )

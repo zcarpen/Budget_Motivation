@@ -1,68 +1,41 @@
 import React from 'react';
 import ExpenseCSS from './Expense.module.css';
 import {
-  faMugSaucer,
-  faCartShopping,
-  faGasPump,
-  faBurger,
-  faTicket,
-  faMusic,
-  faHouse,
-  faGift,
-  faCookieBite,
-  // faGamePad,
-  faFaceSmile,
-  faCircleQuestion,
-  faStar,
+  faMugSaucer, faCartShopping, faGasPump, faBurger, faTicket, faMusic, faHouse, faGift, faCookieBite, faGamepad, faFaceSmile, faCircleQuestion, faStar, faCircleXmark
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Expense = ({ expenseType }) => {
-  const iconSelector = (type) => {
-    if (type === 'coffee') {
-      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faMugSaucer} />//coffee
-    }
-    if (type === 'gas') {
-      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faGasPump} />//gas
-    }
-    if (type === 'eat-out') {
-      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faBurger} />//eatout
-    }
-    if (type === 'movie') {
-      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faTicket} />//movie
-    }
-    if (type === 'music') {
-      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faMusic} />//music
-    }
-    if (type === 'grocery') {
-      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faCartShopping} />//grocery
-    }
-    if (type === 'house') {
-      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faHouse} />//house
-    }
-    if (type === 'gifts') {
-      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faGift} />//gifts
-    }
-    if (type === 'snack') {
-      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faCookieBite} />//snacks
-    }
-    // if (type === ) {
-    //   return <FontAwesomeIcon className={ExpenseCSS['icon']} icon="fa-solid fa-gamepad" />//games
-    // }
-    if (type === 'self-care') {
-      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faFaceSmile} />//self-care
-    }
-    if (type === 'other') {
-      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faCircleQuestion} />//other
-    }
-    if (type === 'favorite') {
-      return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={faStar} />//favorite
-    }
+const Expense = ({ expenseType, handleExpenseModal, modal, canDelete, deleteExpenseCategoryHandler }) => {
+  const icons = {
+    coffee: faMugSaucer,
+    gas: faGasPump,
+    'eat-out': faBurger,
+    movie: faTicket,
+    music: faMusic,
+    grocery: faCartShopping,
+    house: faHouse,
+    gifts: faGift,
+    snack: faCookieBite,
+    games: faGamepad,
+    'self-care': faFaceSmile,
+    other: faCircleQuestion,
+    favorite: faStar,
   }
+
+  let styleName = modal ? 'expense-container-modal' : 'expense-container';
+
+  const iconSelector = (type) => {
+    return <FontAwesomeIcon className={ExpenseCSS['icon']} icon={icons[type]} />
+  }
+
   return (
-    <div className={ExpenseCSS['expense-container']}>
-      {iconSelector(expenseType)}
-      <p className={ExpenseCSS["expense-type"]}>{expenseType}</p>
+    <div className={ExpenseCSS[styleName]}>
+      <div onClick={(e) => handleExpenseModal(e)} className={ExpenseCSS['contain']} id={expenseType}>
+        {iconSelector(expenseType)}
+        <p className={ExpenseCSS["expense-type"]}>{expenseType}</p>
+      </div>
+      {canDelete && <FontAwesomeIcon onClick={() => deleteExpenseCategoryHandler(expenseType)} className={ExpenseCSS['btn__delete-category']} icon={faCircleXmark} />
+      }
     </div>
   )
 }

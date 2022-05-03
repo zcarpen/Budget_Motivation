@@ -1,0 +1,72 @@
+.container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.98;
+  border-radius: 1rem;
+  height: 50%;
+  width: 70%;
+  background-color: green;
+}
+
+.btn__submit-expense {
+  margin-top: 3rem;
+  width: 80%;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 3px 3px 5px #000;
+}
+
+.btn__submit-expense:hover {
+  color: #555;
+  border: 0.2rem solid #555;
+  box-shadow: none;
+}
+
+.btn__close-expense {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(-15%, 15%);
+  font-size: 3rem;
+}
+
+.expense-input {
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  /* place dollar sign */
+}
+
+.input-container {
+  display: flex;
+  position: relative;
+}
+
+.dollar-sign {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.warning {
+  position: absolute;
+  bottom: -1.2rem;
+  left: 50%;
+  transform: translate(-40%, 0);
+  font-size: 1rem;
+  color: white;
+  letter-spacing: 0.2rem;
+  font-weight: 700;
+  width: 100%;
+  padding: 0 1rem;
+}

@@ -11,6 +11,24 @@
   align-items: center;
 }
 
+.contain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expense-container-modal {
+  width: 5.5rem;
+  height: 5.5rem;
+  border: 0.2rem solid #000;
+  border-radius: 1rem;
+  margin-bottom: 3.5rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .expense-type {
   margin: 0;
   font-size: 1.2rem;
@@ -22,6 +40,17 @@
 
 .icon {
   font-size: 3rem;
+}
+
+.btn__delete-category {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  background-color: #fff;
+  border-radius: 50%;
+  color: #000;
+  font-size: 2rem;
+  z-index: 5;
 }
 
 

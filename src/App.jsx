@@ -1,8 +1,12 @@
 import { useState } from 'react'
+
+import { addTransaction, deleteIcon } from './helperFunctions.js';
 import logo from './logo.svg'
 import AppCSS from './App.module.css'
 import MainInterface from './mainInterface/MainInterface'
 import Nav from './nav/Nav'
+import ExpenseModal from './modal/ExpenseModal.jsx'
+import AddCategoryModal from './modal/AddCategoryModal.jsx'
 
 const routes = {
   MAIN: "MAIN",
@@ -27,6 +31,8 @@ const transactions = [
   { id: 12, type: 'selfCare', amount: 150, time: 'someTime' }
 ]
 
+const id = 100;
+
 const userName = 'zcarpen';
 const income = 5500;
 const budget = 3800;
@@ -38,6 +44,53 @@ function App() {
   const [allTransactions, setAllTransactions] = useState(transactions);
   const [monthlyIncome, setMonthlyIncome] = useState(income);
   const [monthlyBudget, setMonthlyBudget] = useState(budget);
+  const [nextTransactionID, setNextTransactionID] = useState(id);
+  const [expenseModal, setExpenseModal] = useState({ isVisible: false, expense: '' });
+  const [categoryModalIsVisible, setCategoryModalIsVisible] = useState(false);
+  const [canDelete, setCanDelete] = useState(false);
+
+  const addTransactionHandler = (expense) => {
+    const newTransactions = addTransaction(expense, allTransactions)
+    setAllTransactions(newTransactions)
+    setExpenseModal(false)
+    // add transaction to DB
+
+  }
+  const handleExpenseModal = (e) => {
+    setExpenseModal({ isVisible: true, expense: e.currentTarget.id })
+  }
+
+  const closeModalHandler = (modalType) => {
+    if (modalType === 'expenseModal') {
+      setExpenseModal(false)
+    }
+    if (modalType === 'categoriesModal') {
+      setCategoryModalIsVisible(false)
+    }
+  }
+
+  const deleteExpenseCategoryHandler = (expenseType) => {
+    debugger;
+    if (!canDelete) {
+      setCanDelete(true)
+    } else {
+      setExpenseCategories(deleteIcon(expenseCategories, expenseType))
+      setCanDelete(false);
+    }
+  }
+
+  const addExpenseCategoryHandler = (expenseType) => {
+    debugger;
+    if (!categoryModalIsVisible) {
+      setCategoryModalIsVisible(true)
+    } else {
+      setExpenseCategories(addIcon(expenseCategories, expenseType))
+      setCategoryModalIsVisible(false);
+    }
+  }
+
+
+
 
 
   // useEffect(() => {
@@ -56,17 +109,30 @@ function App() {
   // setRoute(routes.DASH)
   // if (routes.DASH) return <Dash></Dash>
   // if (routes.MOTIVATOR)
+  console.log(allTransactions)
+  console.log(expenseCategories)
 
   return (
-    <div className={AppCSS.app}>
+    <div className={AppCSS.app} >
       <Nav route={route} userName={userName} />
       <MainInterface
         expenseCategories={expenseCategories}
         allTransactions={allTransactions}
         monthlyIncome={monthlyIncome}
         monthlyBudget={monthlyBudget}
+        canDelete={canDelete}
+        handleExpenseModal={handleExpenseModal}
+        addExpenseCategoryHandler={addExpenseCategoryHandler}
+        deleteExpenseCategoryHandler={deleteExpenseCategoryHandler}
       />
-    </div>
+      {expenseModal.isVisible && <ExpenseModal
+        expense={expenseModal.expense}
+        addTransactionHandler={addTransactionHandler}
+        closeModalHandler={closeModalHandler} />}
+      {categoryModalIsVisible && <AddCategoryModal
+        addExpenseCategoryHandler={addExpenseCategoryHandler}
+        closeModalHandler={closeModalHandler} />}
+    </div >
   )
 }
 

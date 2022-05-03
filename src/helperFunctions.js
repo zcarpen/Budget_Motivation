@@ -1,5 +1,5 @@
 
-export const addTransaction = (expense, data, id) => {
+export const addTransaction = (expense, data) => {
   let newTransactions = [...data, expense];
   return newTransactions;
 }
@@ -29,6 +29,9 @@ export const calcTotalExpenses = (allTransactions) => {
 }
 
 export const deleteIcon = (icons, type) => {
+  if (type === 'other') {
+    return icons
+  }
   return icons.filter(icon => icon !== type);
 }
 
