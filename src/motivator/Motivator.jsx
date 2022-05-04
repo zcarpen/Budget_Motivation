@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MotivatorCSS from './Motivator.module.css';
 import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
@@ -12,11 +12,16 @@ const Motivator = ({ userData }) => {
   const spent = calcTotalExpenses(userData.allTransactions);
   const anticipatedGrowthPoints = getContinuousInterest7(Number(userData.monthly.income - userData.monthly.budget));
   const actualGrowthPoints = getContinuousInterest7(userData.monthly.income - spent);
-  const motivationGrowthPoints = getContinuousInterest7(userData.monthly.income - spent + calcToggledTransactions(arrayOfToggledExpenseTypes, userData.allTransactions))
-  console.log(actualGrowthPoints)
-  console.log(anticipatedGrowthPoints)
-  console.log(motivationGrowthPoints)
+  let motivationGrowthPoints = getContinuousInterest7(userData.monthly.income - calcToggledTransactions(arrayOfToggledExpenseTypes, userData.allTransactions))
   const expensesObj = createExpensesObj(userData.allTransactions)
+
+  const handleToggle = (e) => {
+    setArrayOfToggledExpenseTypes(toggleTransaction(arrayOfToggledExpenseTypes, e.currentTarget.id))
+  }
+
+  useEffect(() => {
+    motivationGrowthPoints = getContinuousInterest7(userData.monthly.income - calcToggledTransactions(arrayOfToggledExpenseTypes, userData.allTransactions))
+  }, [arrayOfToggledExpenseTypes])
 
   console.log(userData)
   return (
@@ -26,8 +31,9 @@ const Motivator = ({ userData }) => {
         <p>(Imagine trying to spend a little less)</p>
         <div className={MotivatorCSS['expense-categories']}>
           {Object.entries(expensesObj).map((transaction, idx) => {
+            const nameClass = arrayOfToggledExpenseTypes.includes(transaction[0]) ? 'expense-toggled' : 'expense'
             return (
-              <div className={MotivatorCSS['expense']} key={idx}>
+              <div onClick={(e) => handleToggle(e)} id={transaction[0]} className={MotivatorCSS[nameClass]} key={idx}>
                 <h4>{transaction[0]}</h4>
                 <p>{Number(transaction[1]).toFixed(2)}</p>
               </div>
