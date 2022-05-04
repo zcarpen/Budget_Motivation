@@ -32,11 +32,17 @@ const Expense = ({ expenseType, handleExpenseModal, modal, canDelete, deleteExpe
 
   return (
     <div className={ExpenseCSS[styleName]}>
-      <div onClick={(e) => handleExpenseModal(e)} className={ExpenseCSS['contain']} id={expenseType}>
+      <div
+        className={ExpenseCSS['contain']}
+        onClick={(e) => handleExpenseModal(e)}
+        id={expenseType}>
         {iconSelector(expenseType)}
         <p className={ExpenseCSS["expense-type"]}>{expenseType}</p>
       </div>
-      {canDelete && <FontAwesomeIcon onClick={() => deleteExpenseCategoryHandler(expenseType)} className={ExpenseCSS['btn__delete-category']} icon={faCircleXmark} />
+      {canDelete && <FontAwesomeIcon
+        onClick={() => deleteExpenseCategoryHandler(expenseType)}
+        className={ExpenseCSS['btn__delete-category']}
+        icon={faCircleXmark} />
       }
     </div>
   )

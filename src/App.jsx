@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { addTransaction, deleteIcon, addIcon } from './helperFunctions.js';
+import { createUser, getUser } from './apiMaster';
 import logo from './logo.svg'
 import AppCSS from './App.module.css'
 import MainInterface from './mainInterface/MainInterface'
@@ -31,8 +32,6 @@ const transactions = [
   { id: 12, type: 'selfCare', amount: 150, time: 'someTime' }
 ]
 
-const id = 100;
-
 const userName = 'zcarpen';
 const income = 5500;
 const budget = 3800;
@@ -44,7 +43,6 @@ function App() {
   const [allTransactions, setAllTransactions] = useState(transactions);
   const [monthlyIncome, setMonthlyIncome] = useState(income);
   const [monthlyBudget, setMonthlyBudget] = useState(budget);
-  const [nextTransactionID, setNextTransactionID] = useState(id);
   const [expenseModal, setExpenseModal] = useState({ isVisible: false, expense: '' });
   const [categoryModalIsVisible, setCategoryModalIsVisible] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
@@ -60,21 +58,22 @@ function App() {
     setExpenseModal({ isVisible: true, expense: e.currentTarget.id })
   }
 
+  const deleteExpenseCategoryHandler = (expenseType) => {
+    createUser()
+    if (!canDelete) {
+      setCanDelete(true)
+    } else {
+      setExpenseCategories(deleteIcon(expenseCategories, expenseType))
+      setCanDelete(false);
+    }
+  }
+
   const closeModalHandler = (modalType) => {
     if (modalType === 'expenseModal') {
       setExpenseModal(false)
     }
     if (modalType === 'categoriesModal') {
       setCategoryModalIsVisible(false)
-    }
-  }
-
-  const deleteExpenseCategoryHandler = (expenseType) => {
-    if (!canDelete) {
-      setCanDelete(true)
-    } else {
-      setExpenseCategories(deleteIcon(expenseCategories, expenseType))
-      setCanDelete(false);
     }
   }
 
@@ -91,11 +90,17 @@ function App() {
 
 
 
-  // useEffect(() => {
-  //   // data returned from DB
-  //   setExpenseCategories(data.categ)
+  useEffect(() => {
+    const asyncMethod = async () => {
+      const userInfo = await getUser('zcarpen')
+      console.log(userInfo)
+      // setState
+    }
+    asyncMethod()
+    // data returned from DB
+    // setExpenseCategories(data.categ)
 
-  // }, [])
+  }, [])
 
   // const routes = {
   //   DASH: "DASH",
