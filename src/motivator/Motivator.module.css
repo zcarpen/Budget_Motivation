@@ -1,0 +1,74 @@
+.motivator-container {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: blanchedalmond;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.expense-categories {
+  width: 90%;
+  margin-top: 3rem;
+  /* background-color: #555; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 2rem;
+}
+
+p {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+h4 {
+  margin: 0.25rem 0 0.5rem 0;
+  letter-spacing: 1px;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+.expense {
+  border: 1px solid #000;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 5px #000;
+  color: green;
+  background-color: rgba(243, 67, 67, 0.3);
+}
+
+.expense-toggled {
+  border: 1px solid #000;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: red;
+  background-color: rgba(118, 249, 57, 0.3);
+}
+
+.graph-container {
+  background-color: blanchedalmond;
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  bottom: 0;
+}
+
+.relative {
+  width: 100%;
+  height: 90%;
+  position: absolute;
+  bottom: 0;
+}

@@ -2,17 +2,17 @@ import { useState, useEffect } from 'react'
 
 import { addTransaction, deleteIcon, addIcon } from './helperFunctions.js';
 import { createUser, getUser, addToUser } from './apiMaster';
-import AppCSS from './App.module.css'
-import MainInterface from './mainInterface/MainInterface'
-import Nav from './nav/Nav'
-import ExpenseModal from './modal/ExpenseModal.jsx'
-import AddCategoryModal from './modal/AddCategoryModal.jsx'
+import AppCSS from './App.module.css';
+import MainInterface from './mainInterface/MainInterface';
+import Nav from './nav/Nav';
+import ExpenseModal from './modal/ExpenseModal.jsx';
+import AddCategoryModal from './modal/AddCategoryModal.jsx';
+import Motivator from './motivator/Motivator.jsx';
 
 
 const userName = 'zcarpen';
 
 function App() {
-
   const [userData, setUserData] = useState({
     monthly: { budget: 0, income: 0 },
     allTransactions: [],
@@ -22,12 +22,17 @@ function App() {
   const [expenseModal, setExpenseModal] = useState({ isVisible: false, expense: '' });
   const [categoryModalIsVisible, setCategoryModalIsVisible] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
+  const [route, setRoute] = useState('Home')
 
   const addTransactionHandler = (expense) => {
     const newTransactions = addTransaction(expense, userData.allTransactions)
     setUserData({ ...userData, allTransactions: newTransactions })
     setExpenseModal(false)
     addToUser(userName, newTransactions, 'allTransactions')
+  }
+
+  const handlePageSwitch = (e) => {
+    setRoute(e.target.value);
   }
 
   const handleExpenseModal = (e) => {
@@ -77,22 +82,23 @@ function App() {
     }
     asyncMethod()
   }, [])
-
+  console.log(route)
   return (
     <div className={AppCSS.app} >
-      <Nav userName={userName} />
-      <MainInterface
+      <Nav userName={userName} handlePageSwitch={handlePageSwitch} />
+      {route === 'Home' && <MainInterface
         userData={userData}
         canDelete={canDelete}
         handleExpenseModal={handleExpenseModal}
         addExpenseCategoryHandler={addExpenseCategoryHandler}
         deleteExpenseCategoryHandler={deleteExpenseCategoryHandler}
-      />
-      {expenseModal.isVisible && <ExpenseModal
+      />}
+      {route === 'Investment Motivator' && <Motivator userData={userData} />}
+      {expenseModal.isVisible && route === 'Home' && <ExpenseModal
         expense={expenseModal.expense}
         addTransactionHandler={addTransactionHandler}
         closeModalHandler={closeModalHandler} />}
-      {categoryModalIsVisible && <AddCategoryModal
+      {categoryModalIsVisible && route === 'Home' && <AddCategoryModal
         addExpenseCategoryHandler={addExpenseCategoryHandler}
         closeModalHandler={closeModalHandler} />}
     </div >
