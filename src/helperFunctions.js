@@ -1,6 +1,7 @@
 
 export const addTransaction = (expense, data) => {
   let newTransactions = [...data, expense];
+  console.log(newTransactions)
   return newTransactions;
 }
 

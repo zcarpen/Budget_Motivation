@@ -1,4 +1,5 @@
 const { MongoClient } = require("mongodb");
+const util = require('util');
 require('dotenv').config()
 
 
@@ -16,18 +17,6 @@ const createNewUser = async (userName) => {
   const icons = ['other', 'coffee', 'grocery', 'gas', 'eat-out', 'movie', 'music', 'house', 'gifts', 'snack', 'games', 'self-care']
 
   const transactions = [
-    { id: 1, type: 'other', amount: 10, time: 'someTime' },
-    { id: 2, type: 'coffee', amount: 100, time: 'someTime' },
-    { id: 3, type: 'grocery', amount: 300, time: 'someTime' },
-    { id: 4, type: 'gas', amount: 100, time: 'someTime' },
-    { id: 5, type: 'eatOut', amount: 100, time: 'someTime' },
-    { id: 6, type: 'movie', amount: 50, time: 'someTime' },
-    { id: 7, type: 'music', amount: 50, time: 'someTime' },
-    { id: 8, type: 'house', amount: 150, time: 'someTime' },
-    { id: 9, type: 'gifts', amount: 30, time: 'someTime' },
-    { id: 10, type: 'snack', amount: 30, time: 'someTime' },
-    { id: 11, type: 'games', amount: 50, time: 'someTime' },
-    { id: 12, type: 'selfCare', amount: 150, time: 'someTime' }
   ]
 
   userName = 'zcarpen';
@@ -56,7 +45,22 @@ const createNewUser = async (userName) => {
 const readUser = async (user) => {
   const users = db.collection('users');
   const result = await users.find({ userName: user }).toArray();
+  console.log(util.inspect(result, { depth: null }))
   return result;
 }
 
-module.exports = { createNewUser, readUser }
+const updateUser = async (user, data, type) => {
+  const users = db.collection('users');
+  const userInfo = await users.find({ userName: user }).toArray();
+  const history = userInfo[0].history.slice(-1)[0]
+  const newData = { ...history.data, [type]: data }
+  const newHistory = { ...history, data: newData }
+  userInfo[0].history.pop();
+  userInfo[0].history.push(newHistory)
+
+  console.log(util.inspect(userInfo, { depth: null }))
+  console.log('visited  on last request')
+  await users.updateOne({ userName: user }, { $set: { "history": userInfo[0].history } }, { upsert: false })
+}
+
+module.exports = { createNewUser, readUser, updateUser }

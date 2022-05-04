@@ -13,6 +13,7 @@ const ExpenseModal = ({ expense, addTransactionHandler, closeModalHandler }) => 
   const icons = ['other', 'coffee', 'grocery', 'gas', 'eat-out', 'movie', 'music', 'house', 'gifts', 'snack', 'games', 'self-care']
 
   const createTransaction = (e) => {
+    console.log(expense)
     e.preventDefault()
     let time = new Date().getTime()
     let id = uuid.v4()
