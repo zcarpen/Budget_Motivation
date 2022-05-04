@@ -2,42 +2,35 @@ import { useState, useEffect } from 'react'
 
 import { addTransaction, deleteIcon, addIcon } from './helperFunctions.js';
 import { createUser, getUser, addToUser } from './apiMaster';
-import logo from './logo.svg'
 import AppCSS from './App.module.css'
 import MainInterface from './mainInterface/MainInterface'
 import Nav from './nav/Nav'
 import ExpenseModal from './modal/ExpenseModal.jsx'
 import AddCategoryModal from './modal/AddCategoryModal.jsx'
 
-const routes = {
-  MAIN: "MAIN",
-  MOTIVATOR: "MOTIVATOR",
-  CHART: "CHART",
-}
 
 const userName = 'zcarpen';
 
 function App() {
 
-  const [route, setRoute] = useState(routes.MAIN);
-  const [userID, setUserID] = useState('')
-  const [expenseCategories, setExpenseCategories] = useState([]);
-  const [allTransactions, setAllTransactions] = useState([]);
-  const [monthlyIncome, setMonthlyIncome] = useState(0);
-  const [monthlyBudget, setMonthlyBudget] = useState(0);
-  const [userName, setUserName] = useState('');
+  const [userData, setUserData] = useState({
+    monthly: { budget: 0, income: 0 },
+    allTransactions: [],
+    expenseCategories: [],
+    userName: ''
+  })
   const [expenseModal, setExpenseModal] = useState({ isVisible: false, expense: '' });
   const [categoryModalIsVisible, setCategoryModalIsVisible] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
 
   const addTransactionHandler = (expense) => {
-    const newTransactions = addTransaction(expense, allTransactions)
-    setAllTransactions(newTransactions)
+    const newTransactions = addTransaction(expense, userData.allTransactions)
+    setUserData({ ...userData, allTransactions: newTransactions })
     setExpenseModal(false)
     addToUser(userName, newTransactions, 'allTransactions')
   }
+
   const handleExpenseModal = (e) => {
-    console.log(e.currentTarget.id)
     setExpenseModal({ isVisible: true, expense: e.currentTarget.id })
   }
 
@@ -49,23 +42,24 @@ function App() {
       setCategoryModalIsVisible(false)
     }
   }
+
   const deleteExpenseCategoryHandler = (expenseType) => {
     if (!canDelete) {
       setCanDelete(true)
     } else {
-      setExpenseCategories(deleteIcon(expenseCategories, expenseType))
-      addToUser(userName, deleteIcon(expenseCategories, expenseType), 'expenseCategories')
+      setUserData({ ...userData, expenseCategories: deleteIcon(userData.expenseCategories, expenseType) })
+      addToUser(userName, deleteIcon(userData.expenseCategories, expenseType), 'expenseCategories')
       setCanDelete(false);
     }
   }
-
 
   const addExpenseCategoryHandler = (expenseType) => {
     if (!categoryModalIsVisible) {
       setCategoryModalIsVisible(true)
     } else {
-      setExpenseCategories(addIcon(expenseCategories, expenseType))
-      addToUser(userName, addIcon(expenseCategories, expenseType), 'expenseCategories')
+      const newCategories = addIcon(userData.expenseCategories, expenseType)
+      addToUser(userName, newCategories, 'expenseCategories')
+      setUserData({ ...userData, expenseCategories: newCategories })
       setCategoryModalIsVisible(false);
     }
   }
@@ -74,24 +68,21 @@ function App() {
     const asyncMethod = async () => {
       const userInfo = await getUser('zcarpen')
       const { expenseCategories, allTransactions, userName, income, budget, totalSaved } = userInfo[0].history[0].data
-      setUserID(userInfo[0]._id)
-      setExpenseCategories(expenseCategories)
-      setAllTransactions(allTransactions)
-      setMonthlyIncome(income)
-      setMonthlyBudget(budget)
-      setUserName(userName)
+      setUserData({
+        monthly: { 'income': income, 'budget': budget },
+        allTransactions: allTransactions,
+        expenseCategories: expenseCategories,
+        userName: userName
+      })
     }
     asyncMethod()
   }, [])
 
   return (
     <div className={AppCSS.app} >
-      <Nav route={route} userName={userName} />
+      <Nav userName={userName} />
       <MainInterface
-        expenseCategories={expenseCategories}
-        allTransactions={allTransactions}
-        monthlyIncome={monthlyIncome}
-        monthlyBudget={monthlyBudget}
+        userData={userData}
         canDelete={canDelete}
         handleExpenseModal={handleExpenseModal}
         addExpenseCategoryHandler={addExpenseCategoryHandler}
@@ -109,3 +100,10 @@ function App() {
 }
 
 export default App
+
+// const routes = {
+//   MAIN: "MAIN",
+//   MOTIVATOR: "MOTIVATOR",
+//   CHART: "CHART",
+// }
+// const [route, setRoute] = useState(routes.MAIN);

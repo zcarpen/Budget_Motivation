@@ -4,10 +4,7 @@ import MainInterfaceCSS from './MainInterface.module.css';
 import Expenses from './Expenses.jsx';
 
 const MainInterface = ({
-  expenseCategories,
-  allTransactions,
-  monthlyIncome,
-  monthlyBudget,
+  userData,
   canDelete,
   handleExpenseModal,
   deleteExpenseCategoryHandler,
@@ -18,12 +15,10 @@ const MainInterface = ({
     <div className={MainInterfaceCSS['main-interface-container']}>
       <h3>Add An Expense</h3>
       <Breakdown
-        allTransactions={allTransactions}
-        monthlyBudget={monthlyBudget}
-        monthlyIncome={monthlyIncome}
+        userData={userData}
       />
       <Expenses
-        expenseCategories={expenseCategories}
+        expenseCategories={userData.expenseCategories}
         handleExpenseModal={handleExpenseModal}
         canDelete={canDelete}
         deleteExpenseCategoryHandler={deleteExpenseCategoryHandler}
