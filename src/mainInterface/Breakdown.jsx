@@ -3,16 +3,15 @@ import BreakdownCSS from './Breakdown.module.css';
 import { calcTotalExpenses } from '../helperFunctions.js'
 
 const Breakdown = ({
-  allTransactions,
-  monthlyBudget
+  userData
 }) => {
-  const spent = calcTotalExpenses(allTransactions)
+  const spent = calcTotalExpenses(userData.allTransactions)
   return (
     <div className={BreakdownCSS['breakdown-container']}>
       <p className={BreakdownCSS['breakdown-point']}>
         Budget:
         <span className={BreakdownCSS['budget']}>
-          {monthlyBudget.toFixed(2)}
+          {userData.monthly.budget.toFixed(2)}
         </span>
       </p>
       <p className={BreakdownCSS['breakdown-point']}>
@@ -24,7 +23,7 @@ const Breakdown = ({
       <p className={BreakdownCSS['breakdown-point']}>
         Left:
         <span className={BreakdownCSS['left']}>
-          {(monthlyBudget - spent).toFixed(2)}
+          {(userData.monthly.budget - spent).toFixed(2)}
         </span>
       </p>
     </div>

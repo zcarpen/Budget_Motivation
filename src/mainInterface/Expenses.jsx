@@ -6,14 +6,16 @@ const Expenses = ({ handleExpenseModal, canDelete, deleteExpenseCategoryHandler,
 
   return (
     <div className={ExpensesCSS['expenses-container']}>
-      {expenseCategories.map((expenseType =>
-        <Expense
+      {expenseCategories.map((expenseType, idx) => {
+        return < Expense
+          key={idx}
           handleExpenseModal={handleExpenseModal}
           expenseType={expenseType}
           modal={false}
           canDelete={canDelete}
           deleteExpenseCategoryHandler={deleteExpenseCategoryHandler}
-        />))}
+        />
+      })}
     </div>
   )
 }

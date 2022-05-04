@@ -1,11 +1,11 @@
 
 export const addTransaction = (expense, data) => {
   let newTransactions = [...data, expense];
+  console.log(newTransactions)
   return newTransactions;
 }
 
 export const updateTransaction = (newExpense, data, id) => {
-  // find index of id, replace with newExpense
   const index = data.findIndex(expense => expense.id === id);
   const newExpenses = [...data];
   newExpenses[index] = newExpense;
@@ -80,12 +80,6 @@ export const getContinuousInterest7 = (initialInvestment, time = 7) => {
   return investmentByYear;
 }
 
-
-// describe("getCompound7", () => {
-//   it("should calculate the compound interest for a given amount for 7 iterations")
-//   it("should return an array of length 7")
-// })
-// module.exports = { addTransaction, updateTransaction, removeTransaction, createExpensesObj, calcTotalExpenses, deleteIcon, addIcon, calcPercentage, toggleTransaction, calcToggledTransactions, getContinuousInterest, getContinuousInterest7 }
 
 
 
