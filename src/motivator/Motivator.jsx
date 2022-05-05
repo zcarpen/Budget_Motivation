@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import MotivatorCSS from './Motivator.module.css';
 import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
-import { createExpensesObj, toggleTransaction, calcToggledTransactions, getContinuousInterest7, calcTotalExpenses } from '../helperFunctions.js';
+import { createExpensesObj, toggleTransaction, calcToggledTransactions, getMonthlyCompoundInterest7, calcTotalExpenses } from '../helperFunctions.js';
 
 
 const Motivator = ({ userData }) => {
 
   const [arrayOfToggledExpenseTypes, setArrayOfToggledExpenseTypes] = useState([]);
   const [toggledAmount, setToggleAmount] = useState(0);
+  const [motivationGrowthPoints, setMotivationGrowthPoints] = useState(getMonthlyCompoundInterest7(userData.monthly.income - calcToggledTransactions(arrayOfToggledExpenseTypes, userData.allTransactions)))
   const spent = calcTotalExpenses(userData.allTransactions);
-  const anticipatedGrowthPoints = getContinuousInterest7(Number(userData.monthly.income - userData.monthly.budget));
-  const actualGrowthPoints = getContinuousInterest7(userData.monthly.income - spent);
-  let motivationGrowthPoints = getContinuousInterest7(userData.monthly.income - calcToggledTransactions(arrayOfToggledExpenseTypes, userData.allTransactions))
+  const anticipatedGrowthPoints = getMonthlyCompoundInterest7(Number(userData.monthly.income - userData.monthly.budget), 7, 0);
+  const actualGrowthPoints = getMonthlyCompoundInterest7(userData.monthly.income - spent);
   const expensesObj = createExpensesObj(userData.allTransactions)
 
   const handleToggle = (e) => {
@@ -20,10 +20,12 @@ const Motivator = ({ userData }) => {
   }
 
   useEffect(() => {
-    motivationGrowthPoints = getContinuousInterest7(userData.monthly.income - calcToggledTransactions(arrayOfToggledExpenseTypes, userData.allTransactions))
+    // debugger;
+    const difference = spent - calcToggledTransactions(arrayOfToggledExpenseTypes, userData.allTransactions)
+    setMotivationGrowthPoints(getMonthlyCompoundInterest7((userData.monthly.income - spent + difference), 7, difference))
   }, [arrayOfToggledExpenseTypes])
 
-  console.log(userData)
+
   return (
     <div className={MotivatorCSS['relative']}>
       <div className={MotivatorCSS['motivator-container']}>

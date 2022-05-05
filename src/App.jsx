@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-
 import { addTransaction, deleteIcon, addIcon } from './helperFunctions.js';
 import { createUser, getUser, addToUser } from './apiMaster';
 import AppCSS from './App.module.css';
@@ -82,7 +81,6 @@ function App() {
     }
     asyncMethod()
   }, [])
-  console.log(route)
   return (
     <div className={AppCSS.app} >
       <Nav userName={userName} handlePageSwitch={handlePageSwitch} />
