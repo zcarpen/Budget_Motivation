@@ -65,21 +65,35 @@ export const calcToggledTransactions = (listOfTypesToToggle, allTransactions) =>
   }, 0)
 }
 
-export const getContinuousInterest = (initialInvestment, interestRate = .1, time = 1) => {
+export const getMonthlyCompoundInterest = (initialInvestment, interestRate = .1, time = 1, monthlyInvestments = 0) => {
   if (initialInvestment <= 0) return 0;
-  return Number((initialInvestment * Math.pow(Math.E, (interestRate * time))).toFixed(2));
+  return Number((initialInvestment * (Math.pow((1 + interestRate / 12), (12 * time))) + (monthlyInvestments * (((Math.pow(1 + (interestRate / 12), 12 * time)) - 1) / (interestRate / 12)))).toFixed(2));
 }
 
-export const getContinuousInterest7 = (initialInvestment, time = 7) => {
+export const getMonthlyCompoundInterest7 = (initialInvestment, time = 7, monthlyInvestments = 0) => {
   const investmentByYear = [];
   investmentByYear.push(initialInvestment);
   while (time > 0) {
-    investmentByYear.push(getContinuousInterest(investmentByYear[investmentByYear.length - 1]));
+    investmentByYear.push(getMonthlyCompoundInterest(investmentByYear[investmentByYear.length - 1], .1, 1, monthlyInvestments));
     time--;
   }
   return investmentByYear;
 }
 
+// export const getContinuousInterest = (initialInvestment, interestRate = .1, time = 1) => {
+//   if (initialInvestment <= 0) return 0;
+//   return Number((initialInvestment * Math.pow(Math.E, (interestRate * time))).toFixed(2));
+// }
+
+// export const getContinuousInterest7 = (initialInvestment, time = 7) => {
+//   const investmentByYear = [];
+//   investmentByYear.push(initialInvestment);
+//   while (time > 0) {
+//     investmentByYear.push(getContinuousInterest(investmentByYear[investmentByYear.length - 1]));
+//     time--;
+//   }
+//   return investmentByYear;
+// }
 
 
 

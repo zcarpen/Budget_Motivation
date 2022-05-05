@@ -45,7 +45,6 @@ const createNewUser = async (userName) => {
 const readUser = async (user) => {
   const users = db.collection('users');
   const result = await users.find({ userName: user }).toArray();
-  console.log(util.inspect(result, { depth: null }))
   return result;
 }
 
@@ -57,9 +56,6 @@ const updateUser = async (user, data, type) => {
   const newHistory = { ...history, data: newData }
   userInfo[0].history.pop();
   userInfo[0].history.push(newHistory)
-
-  console.log(util.inspect(userInfo, { depth: null }))
-  console.log('visited  on last request')
   await users.updateOne({ userName: user }, { $set: { "history": userInfo[0].history } }, { upsert: false })
 }
 

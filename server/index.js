@@ -3,7 +3,6 @@ const { createNewUser, readUser, updateUser } = require('../db/model.js');
 const app = express();
 const cors = require('cors');
 const port = 3210
-console.log('whats?')
 
 app.use(cors())
 app.use(express.json())
